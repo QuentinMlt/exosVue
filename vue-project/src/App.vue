@@ -1,6 +1,8 @@
 <script setup>
 import { ref } from 'vue';
 import * as jose from 'jose'
+import axios from 'axios'
+
   const compteur = ref(0);
 
   setInterval(() => {
@@ -13,12 +15,13 @@ import * as jose from 'jose'
 const jwt = ref("");
 const claims = ref("");
 
-const axiosJWT = ref("");
-
-function getJWTWithAxios() {
-  const response = await axios.post('localhost:3001/login', {email: "email@email.com",  password:"1234"});
-  console.log(response)
-}
+const axiosJWT = ref("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MCwiaWF0IjoxNjU0MTYzNTk0fQ.V0JN47El7AFBcjExO321JKN3E-LkXk-ha0KhBjzONDQ");
+const axiosFromAPI = ref("")
+async function getTokenFromAPI(){
+        const instance = axios.create({headers: {"X-Auth-Token": axiosJWT.value}});
+        const response = await instance.post('http://localhost:3000/loginToken').then(res => res).catch(err => err);
+        axiosFromAPI.value = response.request.response;
+    }
 
 function decoderClaims(token) {
   claims.value = jose.decodeJwt(token)
@@ -57,6 +60,12 @@ function saveJwt(jwt) {
   <button @click="saveJwt(jwt)">Sauvegarder JWT</button>
 
   <p>saveJWT = {{saveJWT}}</p>
+
+  <h1>Exo 5</h1>
+
+  <button @click="getTokenFromAPI()">Get avec AXIOS</button>
+
+  <p>{{axiosFromAPI}}</p>
 
 </template>
 
