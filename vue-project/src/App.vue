@@ -12,8 +12,20 @@ import * as jose from 'jose'
   }
 const jwt = ref("");
 const claims = ref("");
+
 function decoderClaims(token) {
   claims.value = jose.decodeJwt(token)
+}
+
+const saveJWT = ref("")
+
+function saveJWT(jwt) {
+  if(!localStorage.getItem('jwt'))
+  {
+    localStorage.setItem('jwt', jwt);
+  }
+
+  saveJWT.value = localStorage.getItem('jwt')
 }
 </script>
 
@@ -31,6 +43,11 @@ function decoderClaims(token) {
 
   <p>jwt = {{jwt}}</p>
   <p>jwt claim = {{claims}}</p>
+
+
+  <h1>Exo4</h1>
+
+
 </template>
 
 <style>
