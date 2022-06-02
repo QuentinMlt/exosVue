@@ -19,7 +19,7 @@ function decoderClaims(token) {
 
 const saveJWT = ref("")
 
-function saveJWT(jwt) {
+function saveJwt(jwt) {
   if(!localStorage.getItem('jwt'))
   {
     localStorage.setItem('jwt', jwt);
@@ -47,6 +47,9 @@ function saveJWT(jwt) {
 
   <h1>Exo4</h1>
 
+  <button @click="saveJwt(jwt)">Sauvegarder JWT</button>
+
+  <p>saveJWT = {{saveJWT}}</p>
 
 </template>
 
