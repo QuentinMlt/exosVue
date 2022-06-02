@@ -13,6 +13,13 @@ import * as jose from 'jose'
 const jwt = ref("");
 const claims = ref("");
 
+const axiosJWT = ref("");
+
+function getJWTWithAxios() {
+  const response = await axios.post('localhost:3001/login', {email: "email@email.com",  password:"1234"});
+  console.log(response)
+}
+
 function decoderClaims(token) {
   claims.value = jose.decodeJwt(token)
 }
