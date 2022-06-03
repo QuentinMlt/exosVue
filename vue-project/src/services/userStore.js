@@ -1,19 +1,27 @@
 import { ref } from "vue";
 
-const user = ref({nom: 'Quentin', email: 'email@email.com'});
+const user = ref(null);
 
-function fakeConnection(){
-    console.log('hey sigining in');
+function useUserStore(){
+    return {user, connect, disconnect};
 }
-
-function deconnexion() {
-    console.log('...');
-}
-
-export function useUserStore(){
-    return {
-        user,
-        deconnexion,
-        fakeConnection
+function connect(name){
+    if (name) {
+        localStorage.setItem('cours-user-name', name);
+        console.log(localStorage.getItem("cours-user-name") + " Connecté avec succès !")
+        return user.value = {name};
+    }
+    else{
+        return null;
     }
 }
+function disconnect(){
+    if (user) {
+        user.value = null;
+        let n = localStorage.getItem("cours-user-name");
+        localStorage.removeItem('cours-user-name');
+        console.log(n + " Deconnecté avec succès !")
+    }
+}
+
+export {useUserStore};

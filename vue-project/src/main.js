@@ -5,6 +5,5 @@ import {useUserStore} from "@/services/userStore"
 
 const {user} = useUserStore();
 
-user.value.nom = "QuentinMlt"
 
 createApp(App).use(router).mount('#app');

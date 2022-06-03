@@ -1,4 +1,11 @@
 <script setup>
+import { ref } from "vue";
+import {useUserStore} from "@/services/userStore";
+
+const {user, disconnect} = useUserStore();
+
+
+
 
 </script>
 
@@ -6,7 +13,7 @@
   
   
   <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <h3>Welcome</h3>
+    <h3>{{!user ? "Welcome" : `Hey ${user.name}`}}</h3>
     <div class="collapse navbar-collapse ms-5" id="navbarNav">
       <ul class="navbar-nav">
         <li class="nav-item">
@@ -19,10 +26,13 @@
           <router-link class="nav-link" :to="{name: 'demojwt'}">Demojwt</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{name: 'login'}">Connexion</router-link>
+          <router-link class="nav-link" :to="{name: 'login'}" v-if="!user">Se Connecter</router-link>
         </li>
         <li class="nav-item">
-          <router-link class="nav-link" :to="{name: 'register'}">Inscription</router-link>
+          <router-link class="nav-link" :to="{name: 'register'}" v-if="!user">S'inscrire</router-link>
+        </li>
+         <li class="nav-item">
+          <button @click="disconnect()" class="badge badge-danger text-danger mt-2" v-if="user">Se deconnecter</button>
         </li>
       </ul>
     </div>
